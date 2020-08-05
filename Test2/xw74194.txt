@@ -1,0 +1,36 @@
+module xw74x194( CLK,CLR,LIN,D,S,RIN,Q
+);
+
+input CLK,CLR,LIN,RIN;
+input [1:0]S;
+input [3:0]D;
+output [3:0]Q;
+reg[3:0]Q; 
+
+always @(CLR)
+	begin
+		if(!CLR)	//CLR 置 0 时，输出数据 Q 清零
+			begin
+				Q <= 4'b0000;
+			end
+	end
+always @(S[1] or S[0] or posedge CLK)	//时钟上升沿
+	begin
+		if(S[1] == 0 && S[0] == 1)
+	//当S[1] = 0 且 S[0] = 1 时，输出数据 Q 左移
+			begin
+				Q <= Q/2 + RIN*8;
+			end
+		if(S[1] == 1 && S[0] == 0)	
+//当S[1] = 1 且 S[0] = 0 时，输出数据 Q 右移
+			begin
+				Q <= Q*2 + LIN;
+			end
+		if(S[1] == 1 && S[0] == 1)	
+//当S[1] = 1  且 S[0] = 时，输出数据 Q 为 D 并行输入
+			begin
+				Q <= D;
+			end
+end 
+
+endmodule

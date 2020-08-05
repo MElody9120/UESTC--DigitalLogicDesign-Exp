@@ -1,0 +1,50 @@
+module mj74x194( CLK,CLR_L,LIN,D,C,B,A,S1,S0,RIN, QD,QC,QB,QA
+);
+
+input CLK,CLR_L,LIN,D,C,B,A,S1,S0,RIN;
+output QD,QC,QB,QA;
+
+wire QAN,QBN,QCN,QDN;
+wire CLK_D,CLR_L_D; wire m0,m1;
+wire S1_L,S1_H,S0_L,S0_H;
+ 
+wire w1,w2,w3,w4,w5,w6,w7,w8,w9,w10;
+wire w11,w12,w13,w14,w15,w16,w17,w18,w19,w20;
+ buf(CLK_D,CLK);
+ buf(m1,m0); 
+
+not(m0,CLR_L);
+not(CLR_L_D,m1);
+not(S1_L,S1); 
+not(S1_H,S1_L);
+
+not(S0_L,S0); 
+not(S0_H,S0_L);
+
+and and1(w1,LIN,S1_H,S0_L); 
+and and2(w2,QD,S1_L,S0_L); 
+and and3(w3,D,S1_H,S0_H); 
+and and4(w4,QC,S1_L,S0_H); 
+or or5(w5,w1,w2,w3,w4);
+and and6(w6,QD,S1_H,S0_L); 
+and and7(w7,QC,S1_L,S0_L); 
+and and8(w8,C,S1_H,S0_H); 
+and and9(w9,QB,S1_L,S0_H); 
+or or10(w10,w6,w7,w8,w9);
+and and11(w11,QC,S1_H,S0_L); 
+and and12(w12,QB,S1_L,S0_L); 
+and and13(w13,B,S1_H,S0_H); 
+and and14(w14,QA,S1_L,S0_H); 
+or or15(w15,w11,w12,w13,w14);
+and and16(w16,QB,S1_H,S0_L); 
+and and17(w17,QA,S1_L,S0_L); 
+and and18(w18,A,S1_H,S0_H); 
+and and19(w19,RIN,S1_L,S0_H); 
+or or20(w20,w16,w17,w18,w19);
+
+mj74x74 q1(CLK_D,w5,1'b1,CLR_L_D,QD,QDN); 
+mj74x74 q2(CLK_D,w10,1'b1,CLR_L_D,QC,QCN); 
+mj74x74 q3(CLK_D,w15,1'b1,CLR_L_D,QB,QBN); 
+mj74x74 q4(CLK_D,w20,1'b1,CLR_L_D,QA,QAN);
+ 
+endmodule
