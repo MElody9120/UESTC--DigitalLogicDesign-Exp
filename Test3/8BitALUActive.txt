@@ -1,0 +1,17 @@
+initial begin
+// Initialize Inputs 
+a = 8'b00000000; 
+b = 8'b00000000; 
+m = 0;
+se = 2'b00;
+
+// Wait 100 ns for global reset to finish 
+#100;
+// Add stimulus here
+end
+
+always #10 a = a + 1; 
+always #160 b = b + 1;
+always #480 se = se + 1; 
+
+endmodule
