@@ -1,0 +1,17 @@
+initial begin
+// Initialize Inputs 
+addr = 4'b0000;
+din = 8'b00000000;
+wr = 0;
+rd = 0;
+cs = 0;
+
+// Wait 100 ns for global reset to finish 
+#100;
+// Add stimulus here
+end
+
+always #5 wr = ~wr; 
+always #10 addr = addr + 1;
+always #160 din = din + 1; 
+endmodule
