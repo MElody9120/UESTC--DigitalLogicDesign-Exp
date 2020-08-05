@@ -1,0 +1,17 @@
+initial begin
+// Initialize Inputs 
+CLK = 0;
+D = 0;
+PR_L = 0;
+CLR_L = 0;
+
+// Wait 100 ns for global reset to finish 
+#100;
+// Add stimulus here 
+PR_L = 1;
+CLR_L = 1;
+D = 0;
+end
+
+always #5 CLK = ~CLK; always #100 D = ~D;
+endmodule
